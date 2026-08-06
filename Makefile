@@ -16,7 +16,11 @@ COLOUR_END		=	\033[0m
 
 SOURCES_PATH	=	srcs/
 
-SOURCES_MAIN	= 	main.c \
+SOURCES	= 	main.c \
+			parser.c \
+			help.c \
+			errors.c \
+			init_data.c \
 
 # **************************************************************************** #
 #                                                                              #
@@ -26,7 +30,7 @@ SOURCES_MAIN	= 	main.c \
 
 OBJECTS_PATH	=	objs/
 
-OBJECTS			=	$(addprefix ${OBJECTS_PATH}, ${SOURCES_MAIN:.c=.o}) \
+OBJECTS			=	$(addprefix ${OBJECTS_PATH}, ${SOURCES:.c=.o}) \
 
 # **************************************************************************** #
 #                                                                              #
