@@ -18,18 +18,18 @@ static int search_opt(char **av, t_ping *data) {
     for (int i = 1; av[i]; i++) {
         if (data->hostname) {
             if (data->help)
-                return (dispatch_err(HELP_ERR, NULL));
-            return (dispatch_err(BAD_OP, NULL));
+                return (dispatch_err(HELP_ERR, NULL, 0));
+            return (dispatch_err(BAD_OP, NULL, 0));
         }
         if (av[i][0] == '-') {
             if (check_opt(&i, av, av[i], data) == 1)
-                return (dispatch_err(BAD_OPT, av[i]));
+                return (dispatch_err(BAD_OPT, av[i], 0));
         }
         else
             data->hostname = av[i];
     }
     if (data->help && (data->verbose || data->str_count || data->hostname))
-        return (dispatch_err(HELP_ERR, NULL));
+        return (dispatch_err(HELP_ERR, NULL, 0));
     return (0);
 }
 
@@ -40,9 +40,9 @@ static int parse_count(t_ping *data) {
     errno = 0;
     value = strtol(data->str_count, &end, 10);
     if (*end != '\0')
-        return (dispatch_err(INV_COUNT, NULL));
+        return (dispatch_err(INV_COUNT, NULL, 0));
     if (errno == ERANGE || value > INT_MAX || value < 1)
-        return (dispatch_err(INV_COUNT, NULL));
+        return (dispatch_err(INV_COUNT, NULL, 0));
     data->count = (int)value;
     return (0);
 }
@@ -53,7 +53,7 @@ int parser(char **av, t_ping *data) {
     if (data->help)
         return(print_help(), 0);
     if (!data->hostname)
-        return (dispatch_err(BAD_OP, NULL));
+        return (dispatch_err(BAD_OP, NULL, 0));
     if (data->str_count) {
         if (parse_count(data) == 1)
             return (1);

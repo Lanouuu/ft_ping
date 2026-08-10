@@ -6,5 +6,6 @@ void    init_data(t_ping *data) {
     data->str_count = NULL;
     data->count = 0;
     data->hostname = NULL;
+    memset(&data->addr, 0, sizeof(data->addr));
     return ;
 }

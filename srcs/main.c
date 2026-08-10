@@ -4,7 +4,7 @@ int main(int ac, char **av) {
     t_ping  data;
 
     if (ac == 1)
-        return (dispatch_err(MISS_HOST_OP, NULL));
+        return (dispatch_err(MISS_HOST_OP, NULL, 0));
     init_data(&data);
     if (parser(av, &data) == 1)
         return (1);
@@ -12,5 +12,6 @@ int main(int ac, char **av) {
         return(0);
     if (resolve_host(&data) == 1)
         return (1);
+    printf("%s\n", inet_ntoa(data.addr.sin_addr));
     return (0);
 }

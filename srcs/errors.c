@@ -1,6 +1,6 @@
 #include "ft_ping.h"
 
-int dispatch_err(int e, char *s) {
+int dispatch_err(int e, char *s, int ret) {
     if (e == MISS_HOST_OP || e == BAD_OP || e == BAD_OPT || e == HELP_ERR) {
         if (e == MISS_HOST_OP)
             fprintf(stderr, "ft_ping: missing host operand\n\n");
@@ -14,5 +14,7 @@ int dispatch_err(int e, char *s) {
     }
     if (e == INV_COUNT)
         fprintf(stderr, "ft_ping: invalid count \n");
+    if (e == GAI_ERR)
+        fprintf(stderr, "ft_ping: %s: %s\n", s, gai_strerror(ret));
     return (1);
 }
