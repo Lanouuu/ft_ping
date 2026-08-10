@@ -12,5 +12,7 @@ int dispatch_err(int e, char *s) {
             fprintf(stderr, "ft_ping: %s: unknown option\n\n", s);
         print_help();
     }
+    if (e == INV_COUNT)
+        fprintf(stderr, "ft_ping: invalid count \n");
     return (1);
 }

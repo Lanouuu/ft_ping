@@ -10,5 +10,7 @@ int main(int ac, char **av) {
         return (1);
     if (data.help)
         return(0);
+    if (resolve_host(&data) == 1)
+        return (1);
     return (0);
 }

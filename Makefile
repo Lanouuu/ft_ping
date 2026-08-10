@@ -4,7 +4,9 @@ CFLAGS			=	-Wall -Wextra -Werror -I ${INCLD_DIR} -g
 
 CC				=	cc
 
-COLOUR_GREEN	=	\033[0;32m
+GREEN			=	\033[0;32m
+
+YELLOW			=	\033[0;33m
 
 COLOUR_END		=	\033[0m
 
@@ -16,11 +18,12 @@ COLOUR_END		=	\033[0m
 
 SOURCES_PATH	=	srcs/
 
-SOURCES	= 	main.c \
-			parser.c \
-			help.c \
-			errors.c \
-			init_data.c \
+SOURCES			= 	main.c \
+					help.c \
+					errors.c \
+					init_data.c \
+					parser.c \
+					resolve.c \
 
 # **************************************************************************** #
 #                                                                              #
@@ -51,13 +54,12 @@ INCLD			=	${INCLD_DIR}ft_ping.h
 all: ${NAME}
 
 ${NAME}: ${OBJECTS} ${INCLD}
-	@echo "Compilation - ${NAME}\n"
 	@${CC} ${CFLAGS} ${OBJECTS} -o ${NAME}
-	@echo "${COLOUR_GREEN}${NAME} compiled\n${COLOUR_END}"
+	@printf "${GREEN}\33[2K\n${NAME} compiled\n${COLOUR_END}"
 
 ${OBJECTS_PATH}%.o:	${SOURCES_PATH}%.c
 	@mkdir -p ${dir $@}
-	@${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@ && printf "\33[2K\r${YELLOW}Compiling ${NAME} :${COLOUR_END} $@"
 
 clean:
 	@rm -rf ${OBJECTS_PATH}
@@ -65,7 +67,7 @@ clean:
 fclean:
 	@rm -rf ${OBJECTS_PATH}
 	@rm -f ${NAME}
-	@echo "${COLOUR_GREEN}${NAME} cleaned\n${COLOUR_END}"
+	@printf "${GREEN}${NAME} cleaned\n${COLOUR_END}"
 
 re: fclean all
 

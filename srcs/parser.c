@@ -33,6 +33,20 @@ static int search_opt(char **av, t_ping *data) {
     return (0);
 }
 
+static int parse_count(t_ping *data) {
+    long    value;
+    char    *end;
+
+    errno = 0;
+    value = strtol(data->str_count, &end, 10);
+    if (*end != '\0')
+        return (dispatch_err(INV_COUNT, NULL));
+    if (errno == ERANGE || value > INT_MAX || value < 1)
+        return (dispatch_err(INV_COUNT, NULL));
+    data->count = (int)value;
+    return (0);
+}
+
 int parser(char **av, t_ping *data) {
     if (search_opt(av, data) == 1)
         return (1);
@@ -40,5 +54,9 @@ int parser(char **av, t_ping *data) {
         return(print_help(), 0);
     if (!data->hostname)
         return (dispatch_err(BAD_OP, NULL));
+    if (data->str_count) {
+        if (parse_count(data) == 1)
+            return (1);
+    }
     return (0);
 }
