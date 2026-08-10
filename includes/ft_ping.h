@@ -21,6 +21,7 @@ enum errors {
     HELP_ERR,
     INV_COUNT,
     GAI_ERR,
+    SOCK_ERR,
 };
 
 // typedef struct s_stats {
@@ -36,6 +37,8 @@ typedef struct s_ping {
 
     char                *hostname;
     struct sockaddr_in  addr;
+
+    int                 sockfd;
 } t_ping;
 
 int     dispatch_err(int err, char *s, int ret);
