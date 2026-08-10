@@ -47,5 +47,6 @@ void    print_help(void);
 void    init_data(t_ping *data);
 int     parser(char **av, t_ping *data);
 int     resolve_host(t_ping *data);
+int     init_socket(t_ping *data);
 
 #endif

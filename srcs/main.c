@@ -12,6 +12,8 @@ int main(int ac, char **av) {
         return(0);
     if (resolve_host(&data) == 1)
         return (1);
-    printf("%s\n", inet_ntoa(data.addr.sin_addr));
+   // printf("%s\n", inet_ntoa(data.addr.sin_addr));
+    if (init_socket(&data) == 1)
+        return (1);
     return (0);
 }
