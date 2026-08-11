@@ -25,6 +25,8 @@ SOURCES			= 	main.c \
 					parser.c \
 					resolve.c \
 					socket.c \
+					packet.c \
+					checksum.c \
 
 # **************************************************************************** #
 #                                                                              #

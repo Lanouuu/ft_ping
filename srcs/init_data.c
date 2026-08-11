@@ -8,5 +8,7 @@ void    init_data(t_ping *data) {
     data->hostname = NULL;
     memset(&data->addr, 0, sizeof(data->addr));
     data->sockfd = -1;
+    data->packet_id = (uint16_t)getpid();
+    data->sequence = 1;
     return ;
 }
