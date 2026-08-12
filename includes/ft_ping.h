@@ -37,6 +37,7 @@ typedef struct s_ping {
     char                *str_count;
     int                 count;
 
+    // socket
     char                *hostname;
     struct sockaddr_in  addr;
     int                 sockfd;
