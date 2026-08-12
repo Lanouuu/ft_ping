@@ -27,6 +27,8 @@ SOURCES			= 	main.c \
 					socket.c \
 					packet.c \
 					checksum.c \
+					send.c \
+					receive.c \
 
 # **************************************************************************** #
 #                                                                              #

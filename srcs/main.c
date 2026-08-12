@@ -15,5 +15,7 @@ int main(int ac, char **av) {
    // printf("%s\n", inet_ntoa(data.addr.sin_addr));
     if (init_socket(&data) == 1)
         return (1);
+    if (ping_pong(&data) == 1)
+        return (1);
     return (0);
 }

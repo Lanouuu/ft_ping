@@ -16,5 +16,9 @@ int dispatch_err(int e, char *s, int ret) {
         fprintf(stderr, "ft_ping: invalid count \n");
     if (e == GAI_ERR)
         fprintf(stderr, "ft_ping: %s: %s\n", s, gai_strerror(ret));
+    if (e == SOCK_ERR)
+        fprintf(stderr, "ft_ping: socket: %s\n", strerror(ret));
+    if (e == SEND_ERR)
+        fprintf(stderr, "ft_ping: sendto: %s\n", strerror(ret));
     return (1);
 }
