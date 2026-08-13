@@ -29,6 +29,10 @@ SOURCES			= 	main.c \
 					checksum.c \
 					send.c \
 					receive.c \
+					analyze.c \
+					display.c \
+					statistics.c \
+					signal.c \
 
 # **************************************************************************** #
 #                                                                              #
