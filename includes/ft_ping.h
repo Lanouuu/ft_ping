@@ -25,6 +25,7 @@ enum errors {
     GAI_ERR,
     SOCK_ERR,
     SEND_ERR,
+    REC_ERR,
 };
 
 // typedef struct s_stats {
@@ -59,5 +60,6 @@ int         resolve_host(t_ping *data);
 void        make_packet(t_ping *data);
 uint16_t    checksum(const unsigned char *packet, size_t size);
 int         ping_pong(t_ping *data);
+ssize_t     sender(t_ping *data);
 
 #endif
