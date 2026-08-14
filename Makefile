@@ -27,6 +27,7 @@ SOURCES			= 	main.c \
 					socket.c \
 					packet.c \
 					checksum.c \
+					ping_pong.c \
 					send.c \
 					receive.c \
 					analyze.c \

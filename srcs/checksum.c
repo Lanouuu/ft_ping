@@ -15,5 +15,5 @@ uint16_t    checksum(const unsigned char *packet, size_t size) {
     while (sum > 0xFFFF)
             sum = (sum & 0xFFFF) + (sum >> 16);
     checksum = ~sum;
-    return (checksum);
+    return (htons(checksum));
 }

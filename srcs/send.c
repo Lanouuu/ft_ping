@@ -5,6 +5,8 @@ ssize_t sender(t_ping *data) {
     
     ret = 0;
     errno = 0;
+    if (clock_gettime(CLOCK_MONOTONIC, &(data->send_time)) == -1)
+        return (dispatch_err(CLOCK_ERR, NULL, errno));
     ret = sendto(
                 data->sockfd,
                 data->packet,

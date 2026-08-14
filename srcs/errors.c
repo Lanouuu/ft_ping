@@ -22,5 +22,7 @@ int dispatch_err(int e, char *s, int ret) {
         fprintf(stderr, "ft_ping: sendto: %s\n", strerror(ret));
     if (e == REC_ERR)
         fprintf(stderr, "ft_ping: recvfrom: %s\n", strerror(ret));
+    if (e == CLOCK_ERR)
+        fprintf(stderr, "ft_ping: clock_gettime: %s\n", strerror(ret));
     return (1);
 }

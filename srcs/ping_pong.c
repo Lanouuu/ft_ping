@@ -23,6 +23,7 @@ int ping_pong(t_ping *data) {
         while (1) {
             if (ping_loop(data) == 1)
                 return (1);
+            sleep(1);
         }
     }
     return (0);
