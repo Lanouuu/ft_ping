@@ -12,17 +12,19 @@ int dispatch_err(int e, char *s, int ret) {
             fprintf(stderr, "ft_ping: %s: unknown option\n\n", s);
         print_help();
     }
-    if (e == INV_COUNT)
+    else if (e == INV_COUNT)
         fprintf(stderr, "ft_ping: -c: invalid count \n");
-    if (e == GAI_ERR)
+    else if (e == GAI_ERR)
         fprintf(stderr, "ft_ping: %s: %s\n", s, gai_strerror(ret));
-    if (e == SOCK_ERR)
+    else if (e == SOCK_ERR)
         fprintf(stderr, "ft_ping: socket: %s\n", strerror(ret));
-    if (e == SEND_ERR)
+    else if (e == SEND_ERR)
         fprintf(stderr, "ft_ping: sendto: %s\n", strerror(ret));
-    if (e == REC_ERR)
+    else if (e == REC_ERR)
         fprintf(stderr, "ft_ping: recvfrom: %s\n", strerror(ret));
-    if (e == CLOCK_ERR)
+    else if (e == CLOCK_ERR)
         fprintf(stderr, "ft_ping: clock_gettime: %s\n", strerror(ret));
+    else if (e == SEL_ERR)
+        fprintf(stderr, "ft_ping: select: %s\n", strerror(ret));
     return (1);
 }

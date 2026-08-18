@@ -31,6 +31,7 @@ SOURCES			= 	main.c \
 					send.c \
 					receive.c \
 					analyze.c \
+					timeout.c \
 					display.c \
 					statistics.c \
 					signal.c \

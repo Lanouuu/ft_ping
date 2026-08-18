@@ -23,6 +23,8 @@ ssize_t receiver(t_ping *data) {
     analyze_ret = analyzer(data, buf, len);
     if (analyze_ret == -1)
         return (dispatch_err(CLOCK_ERR, NULL, errno));
+    else if (analyze_ret == 1)
+        return (2);
     else if (analyze_ret == 0)
         display_packet(&data->display);
     return (0);

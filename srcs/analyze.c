@@ -23,6 +23,8 @@ int analyzer(t_ping *data, const unsigned char *buf, ssize_t len) {
     if (len < (ssize_t)sizeof(struct iphdr))
         return (1);
     ip_header = (struct iphdr *)buf;
+    if (ip_header->ihl < 5)
+        return (1);
     if (len < (ssize_t)(ip_header->ihl * 4))
         return (1);
     if (ip_header->protocol != IPPROTO_ICMP)
@@ -39,6 +41,7 @@ int analyzer(t_ping *data, const unsigned char *buf, ssize_t len) {
     if (ntohs(icmp_header->un.echo.sequence) != data->sequence)
         return (1);
     data->sequence++;
+    data->stats.received++;
     if (clock_gettime(CLOCK_MONOTONIC, &data->receive_time) == -1)
         return (-1);
     fill_display(data, ip_header, icmp_header, len);

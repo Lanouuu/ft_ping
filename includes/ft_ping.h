@@ -28,11 +28,13 @@ enum errors {
     SEND_ERR,
     REC_ERR,
     CLOCK_ERR,
+    SEL_ERR
 };
 
-// typedef struct s_stats {
-
-// } t_stats;
+typedef struct s_stats {
+    int sended;
+    int received;
+} t_stats;
 
 typedef struct s_display {
     ssize_t     len;
@@ -53,16 +55,20 @@ typedef struct s_ping {
     char                *hostname;
     struct sockaddr_in  addr;
     int                 sockfd;
+    fd_set              fds;
+    struct timeval      timeout;
 
     // ICMP packets
     unsigned char       packet[64];
     uint16_t            packet_id;
     uint16_t            sequence;
 
-    struct timespec      send_time;
-    struct timespec      receive_time;
+    struct timespec     send_time;
+    struct timespec     receive_time;
+    struct timespec     deadline;
 
     t_display           display;
+    t_stats             stats;
 } t_ping;
 
 int         dispatch_err(int err, char *s, int ret);
@@ -79,6 +85,7 @@ int         ping_pong(t_ping *data);
 ssize_t     sender(t_ping *data);
 ssize_t     receiver(t_ping *data);
 int         analyzer(t_ping *data, const unsigned char *buf, ssize_t len);
+int         refresh_timeout(t_ping *data);
 void		display_packet(t_display *display);
 
 #endif
