@@ -33,8 +33,10 @@ SOURCES			= 	main.c \
 					analyze.c \
 					timeout.c \
 					display.c \
+					verbose.c \
 					statistics.c \
 					signal.c \
+					free.c \
 
 # **************************************************************************** #
 #                                                                              #
@@ -65,7 +67,7 @@ INCLD			=	${INCLD_DIR}ft_ping.h
 all: ${NAME}
 
 ${NAME}: ${OBJECTS} ${INCLD}
-	@${CC} ${CFLAGS} ${OBJECTS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJECTS} -o ${NAME} -lm
 	@printf "${GREEN}\33[2K\n${NAME} compiled\n${COLOUR_END}"
 
 ${OBJECTS_PATH}%.o:	${SOURCES_PATH}%.c

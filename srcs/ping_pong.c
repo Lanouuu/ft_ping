@@ -4,7 +4,6 @@ static int  ping_loop(t_ping *data) {
     int             ret;
     int             ret_recv;
     
-
     make_packet(data);
     if (sender(data) == 1)
         return (1);
@@ -46,19 +45,26 @@ int ping_pong(t_ping *data) {
             data->hostname,
             inet_ntoa(data->addr.sin_addr)
     );
+    if (clock_gettime(CLOCK_MONOTONIC, &data->stats.start) == -1)
+            return (dispatch_err(CLOCK_ERR, NULL, errno));
     if (data->count) {
-        while (data->count > 0) {
+        while (!stop && data->count > 0) {
             if (ping_loop(data) == 1)
                 return (1);
             data->count--;
+            if (data->count > 0)
+                sleep(1);
         }
     }
     else {
-        while (1) {
+        while (!stop) {
             if (ping_loop(data) == 1)
                 return (1);
-            sleep(1);
+            if (!stop)
+                sleep(1);
         }
     }
+    if (clock_gettime(CLOCK_MONOTONIC, &data->stats.end) == -1)
+            return (dispatch_err(CLOCK_ERR, NULL, errno));
     return (0);
 }

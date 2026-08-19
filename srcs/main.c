@@ -5,6 +5,8 @@ int main(int ac, char **av) {
 
     if (ac == 1)
         return (dispatch_err(MISS_HOST_OP, NULL, 0));
+    if (signals_handler() == 1)
+        return (1);
     init_data(&data);
     if (parser(av, &data) == 1)
         return (1);
@@ -12,10 +14,13 @@ int main(int ac, char **av) {
         return(0);
     if (resolve_host(&data) == 1)
         return (1);
-   // printf("%s\n", inet_ntoa(data.addr.sin_addr));
     if (init_socket(&data) == 1)
         return (1);
-    if (ping_pong(&data) == 1)
+    if (ping_pong(&data) == 1) {
+        free_ping(&data);
         return (1);
+    }
+    display_stats(&data);
+    free_ping(&data);
     return (0);
 }

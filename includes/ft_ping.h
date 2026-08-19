@@ -8,6 +8,8 @@
 # include <limits.h>
 # include <unistd.h>
 # include <time.h>
+# include <math.h>
+# include <signal.h>
 
 # include <arpa/inet.h>
 # include <netinet/in.h>
@@ -15,6 +17,8 @@
 # include <sys/types.h>
 # include <sys/socket.h>
 # include <netdb.h>
+
+extern volatile sig_atomic_t stop;
 
 enum errors {
     MISS_HOST_OP,
@@ -28,17 +32,29 @@ enum errors {
     SEND_ERR,
     REC_ERR,
     CLOCK_ERR,
-    SEL_ERR
+    SEL_ERR,
+    SIG_SET,
+    SIG_ACT,
 };
 
 typedef struct s_stats {
-    int sended;
-    int received;
+    int             sended;
+    int             received;
+    double          loss;
+
+    struct timespec start;
+    struct timespec end;
+    double          total_time;
+    double          rtt_max;
+    double          rtt_min;
+    double          rtt_avg;
+    double          rtt_squared;
+    double          rtt_mdev;
 } t_stats;
 
 typedef struct s_display {
     ssize_t     len;
-    char        ip[INET6_ADDRSTRLEN];
+    char        ip[INET_ADDRSTRLEN];
     uint16_t    sequence;
     uint8_t     ttl;
     double      time;
@@ -87,5 +103,12 @@ ssize_t     receiver(t_ping *data);
 int         analyzer(t_ping *data, const unsigned char *buf, ssize_t len);
 int         refresh_timeout(t_ping *data);
 void		display_packet(t_display *display);
+void        verbose(const unsigned char *buf, struct iphdr *ip_hdr, struct icmphdr *icmp_hdr, ssize_t len);
+
+int         signals_handler(void);
+
+void        display_stats(t_ping *data);
+
+void        free_ping(t_ping *data);
 
 #endif
