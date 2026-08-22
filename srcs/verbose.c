@@ -28,13 +28,15 @@ void    verbose(const unsigned char *buf, struct iphdr *ip_hdr,
     uint16_t        sequence;
     uint8_t         type;
     uint8_t         code;
+    size_t          offset;
     
-    if (len < (ssize_t)(ip_hdr->ihl * 4 + sizeof(struct icmphdr)
-        + sizeof(struct iphdr)))
+    offset = ip_hdr->ihl * 4 + sizeof(struct icmphdr);
+    if (len < (ssize_t)(offset + sizeof(struct iphdr)))
         return ;
-    packet_ip = (struct iphdr *)(buf + ip_hdr->ihl * 4
-                + sizeof(struct icmphdr));
+    packet_ip = (struct iphdr *)(buf + offset);
     if (packet_ip->ihl < 5)
+        return ;
+    if (packet_ip->protocol != IPPROTO_ICMP)
         return ;
     if (len < (ssize_t)(ip_hdr->ihl * 4 + sizeof(struct icmphdr)
         + packet_ip->ihl * 4 + sizeof(struct icmphdr)))
